@@ -1,79 +1,76 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IoTSkybox : MonoBehaviour
+public class data : MonoBehaviour
 {
-    public Material clearSky;
-    public Material cloudySky;
+    public Material positiveChange;
+    public Material negativeChange;
 
-    IEnumerator AdjustSkyToWeather()
+    private bool dataLoaded;
+    private WWW currencyWWW;
+
+    public void Awake()
     {
-        while (true)
+        dataLoaded = false;
+        string currencyURL = "http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json";
+        currencyWWW = new WWW(currencyURL);
+    }
+
+    public void Update()
+    {
+        if (dataLoaded || !currencyWWW.isDone) return;
+
+        // let's look at the results
+        JSONObject j = new JSONObject(currencyWWW.text);
+
+        j.GetField("list", delegate (JSONObject list) {
+            list.GetField("resources", delegate (JSONObject resources) {
+                foreach (JSONObject entry in resources.list)
+                {
+                    entry.GetField("resource", delegate (JSONObject resource) {
+                        resource.GetField("fields", delegate (JSONObject fields) {
+                            string name;
+                            string price;
+                            fields.GetField(out price, "price", "-1");
+                            fields.GetField(out name, "name", "NONAME");
+                            Debug.Log("Found : " + name + " = " + float.Parse(price));
+                        });
+                    });
+                }
+                dataLoaded = true;
+            });
+        }, delegate (string list) { //"name" will be equal to the name of the missing field.  In this case, "hits"
+            Debug.LogWarning("no data found");
+        });
+    }
+
+    //access data (and print it)
+    void accessData(JSONObject obj)
+    {
+        switch (obj.type)
         {
-            string weatherUrl = "http://api.openweathermap.org/data/2.5/weather?zip=2000,au";
+            case JSONObject.Type.OBJECT:
+                for (int i = 0; i < obj.list.Count; i++)
+                {
+                    string key = (string)obj.keys[i];
+                    JSONObject j = (JSONObject)obj.list[i];
+                    Debug.Log(key);
+                    accessData(j);
+                }
+                break;
+            case JSONObject.Type.ARRAY:
+                foreach (JSONObject j in obj.list)
+                {
+                    accessData(j);
+                }
+                break;
+            case JSONObject.Type.STRING:
+                //Debug.Log(obj.resources.resource.name);
+                break;
+            case JSONObject.Type.NUMBER:
+                //Debug.Log(obj.resources.resource.price);
+                break;
 
-            WWW weatherWWW = new WWW(weatherUrl);
-            yield return weatherWWW;
-
-            JSONObject tempData = new JSONObject(weatherWWW.text);
-
-            JSONObject weatherDetails = tempData["weather"];
-            string WeatherType = weatherDetails[0]["main"].str;
-
-            if (WeatherType == "Clear")
-            {
-                RenderSettings.skybox = clearSky;
-            }
-            else if (WeatherType == "Clouds" || WeatherType == "Rain")
-            {
-                RenderSettings.skybox = cloudySky;
-            }
-
-            yield return new WaitForSeconds(60);
         }
-    }
-
-    void Start()
-    {
-        StartCoroutine(AdjustSkyToWeather());
-    }
-}
-
-string encodedString = "{\"field1\": 0.5,\"field2\": \"sampletext\",\"field3\": [1,2,3]}";
-JSONObject j = new JSONObject(encodedString);
-accessData(j);
-//access data (and print it)
-void accessData(JSONObject obj)
-{
-    switch (obj.type)
-    {
-        case JSONObject.Type.OBJECT:
-            for (int i = 0; i < obj.list.Count; i++)
-            {
-                string key = (string)obj.keys[i];
-                JSONObject j = (JSONObject)obj.list[i];
-                Debug.Log(key);
-                accessData(j);
-            }
-            break;
-        case JSONObject.Type.ARRAY:
-            foreach (JSONObject j in obj.list)
-            {
-                accessData(j);
-            }
-            break;
-        case JSONObject.Type.STRING:
-            Debug.Log(obj.str);
-            break;
-        case JSONObject.Type.NUMBER:
-            Debug.Log(obj.n);
-            break;
-        case JSONObject.Type.BOOL:
-            Debug.Log(obj.b);
-            break;
-        case JSONObject.Type.NULL:
-            Debug.Log("NULL");
-            break;
-
     }
 }

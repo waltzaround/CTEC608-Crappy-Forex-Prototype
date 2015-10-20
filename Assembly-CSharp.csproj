@@ -50,6 +50,7 @@
      <Compile Include="Assets\JSON\VectorTemplates.cs" />
      <Compile Include="Assets\Scripts\MotionController.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\data.cs" />
      <None Include="Assets\JSON\readme.txt" />
  <Reference Include="UnityEngine.UI">
