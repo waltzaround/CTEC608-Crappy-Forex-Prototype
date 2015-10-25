@@ -11,13 +11,25 @@ public class data : MonoBehaviour
 
     public void Awake()
     {
-        dataLoaded = false;
+        // Starting in 2 seconds.
+        // data will be called every 4 seconds
+        InvokeRepeating("dataGet", 2, 4);
+        
+    }
+
+    public void dataGet()
+    { 
+    dataLoaded = false;
         string currencyURL = "http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json";
-        currencyWWW = new WWW(currencyURL);
+    currencyWWW = new WWW(currencyURL);
     }
 
     public void Update()
     {
+
+
+  
+
         if (dataLoaded || !currencyWWW.isDone) return;
 
         // let's look at the results
@@ -31,9 +43,11 @@ public class data : MonoBehaviour
                         resource.GetField("fields", delegate (JSONObject fields) {
                             string name;
                             string price;
+                            string volume;
                             fields.GetField(out price, "price", "-1");
                             fields.GetField(out name, "name", "NONAME");
-                            Debug.Log("Found : " + name + " = " + float.Parse(price));
+                            fields.GetField(out volume, "volume", "NOVOLUME");
+                            Debug.Log("Found : " + name + " = " + float.Parse(price) + " at " + float.Parse(volume) + " sold");
                         });
                     });
                 }
@@ -44,33 +58,4 @@ public class data : MonoBehaviour
         });
     }
 
-    //access data (and print it)
-    void accessData(JSONObject obj)
-    {
-        switch (obj.type)
-        {
-            case JSONObject.Type.OBJECT:
-                for (int i = 0; i < obj.list.Count; i++)
-                {
-                    string key = (string)obj.keys[i];
-                    JSONObject j = (JSONObject)obj.list[i];
-                    Debug.Log(key);
-                    accessData(j);
-                }
-                break;
-            case JSONObject.Type.ARRAY:
-                foreach (JSONObject j in obj.list)
-                {
-                    accessData(j);
-                }
-                break;
-            case JSONObject.Type.STRING:
-                //Debug.Log(obj.resources.resource.name);
-                break;
-            case JSONObject.Type.NUMBER:
-                //Debug.Log(obj.resources.resource.price);
-                break;
-
-        }
-    }
 }
