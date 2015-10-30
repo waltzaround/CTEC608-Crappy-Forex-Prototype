@@ -7,7 +7,7 @@ public class cubeBehaviour : MonoBehaviour {
     public void SetData(CurrencyData data)
     {
         this.data = data;
-        speed = (Random.insideUnitSphere) * 0.05f;
+        speed = (Random.insideUnitSphere) * 0.02f;
         DataUpdated();
     }
 
