@@ -10,9 +10,10 @@ public class CollisionScript : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
-        Destroy(gameObject);
+        Debug.Log("stuff");
+       if(collision.gameObject.tag == "cube") { Destroy(collision.gameObject); }
 
     }
 }

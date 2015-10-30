@@ -1,21 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CurrencyData : MonoBehaviour {
-
-    public string theName;
-    public string price;
-    public string volume;
+public class CurrencyData
+{
+    public GameObject gameObject;
 
     // Use this for initialization
-   public void Initialise(string name, string price, string volume)
+   public CurrencyData(string name, string price, string volume)
     {
-        this.theName = name;
+        this.name = name;
         this.price = price;
         this.volume = volume;
+        this.gameObject = null;
+    }
+
+    public void Update(string price, string volume)
+    {
+        this.price = price;
+        this.volume = volume;
+        if ( gameObject != null )
+        {
+            cubeBehaviour cb = gameObject.GetComponent<cubeBehaviour>();
+            if (cb != null)
+            {
+                cb.DataUpdated();
+            }
+        }
     }
 	
-    public string GetName() { return theName; }
+    public string GetName() { return name; }
     public string GetPrice() { return price; }
     public string Getvolume() { return volume; }
+
+    private string name;
+    private string price;
+    private string volume;
+
 }
