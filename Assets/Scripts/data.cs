@@ -84,7 +84,7 @@ public class data : MonoBehaviour
         cubes[counter].GetComponent<cubeBehaviour>().SetData(data);
         counter++;
         Debug.Log("WE HAVE " + counter + " CUBES");
-        if(counter > 700)
+        if(counter > 4000)
         {
             foreach(GameObject cube in cubes) {
                 Destroy(cube);
