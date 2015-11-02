@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class data : MonoBehaviour
 {
+    public int counter;
     public GameObject spawnTemplate;
     // public Material positiveChange;
     // public Material negativeChange;
@@ -17,6 +18,10 @@ public class data : MonoBehaviour
         // Starting in 2 seconds.
         // data will be called every 4 seconds
         InvokeRepeating("dataGet", 2, 4);
+        counter = 0;
+
+
+
         
     }
 
@@ -29,6 +34,8 @@ public class data : MonoBehaviour
 
     public void Update()
     {
+        
+
         if (dataLoaded || currencyWWW == null || !currencyWWW.isDone) return;
 
         // let's look at the results
@@ -52,7 +59,9 @@ public class data : MonoBehaviour
                             
                             CurrencyData data = new CurrencyData(name, price, volume);
                             CreateDataObject(data);
-                           
+
+
+
 
                             //Debug.Log("Found : " + name + " = " + float.Parse(price) + " at " + float.Parse(volume) + " sold");
                         });
@@ -70,6 +79,17 @@ public class data : MonoBehaviour
         GameObject spawnedObject;
         spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
         spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
+        counter++;
+        Debug.Log("WE HAVE " + counter + " CUBES");
+        if(counter > 300)
+        {
+            foreach (GameObject spawnedObject in Object.FindObjectsOfType<GameObject>())
+            {
+                Destroy(spawnedObject);
+            }
+            counter = 0;
+        }
+
+    }
     }
 
-}
