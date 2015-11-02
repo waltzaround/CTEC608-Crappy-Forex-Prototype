@@ -21,6 +21,7 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         rotation = new Vector3();
+        Cursor.visible = false;
     }
 
 
