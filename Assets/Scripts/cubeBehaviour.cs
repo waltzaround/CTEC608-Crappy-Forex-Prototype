@@ -11,7 +11,7 @@ public class cubeBehaviour : MonoBehaviour {
 
         text = gameObject.GetComponentInChildren<TextMesh>();
         this.data = data;
-        speed = (Random.insideUnitSphere) * 0.02f;
+        speed = (Random.insideUnitSphere) * 0.05f;
         DataUpdated();
         values = data.GetName() + '\n' + data.GetPrice() + '\n' + data.Getvolume();
 

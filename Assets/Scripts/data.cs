@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class data : MonoBehaviour
 {
+    public int counter;
     public GameObject spawnTemplate;
+    List<GameObject> cubes = new List<GameObject>();    
     // public Material positiveChange;
     // public Material negativeChange;
 
@@ -17,6 +19,10 @@ public class data : MonoBehaviour
         // Starting in 2 seconds.
         // data will be called every 4 seconds
         InvokeRepeating("dataGet", 2, 4);
+        counter = 0;
+
+
+
         
     }
 
@@ -29,6 +35,8 @@ public class data : MonoBehaviour
 
     public void Update()
     {
+        
+
         if (dataLoaded || currencyWWW == null || !currencyWWW.isDone) return;
 
         // let's look at the results
@@ -52,7 +60,9 @@ public class data : MonoBehaviour
                             
                             CurrencyData data = new CurrencyData(name, price, volume);
                             CreateDataObject(data);
-                           
+
+
+
 
                             //Debug.Log("Found : " + name + " = " + float.Parse(price) + " at " + float.Parse(volume) + " sold");
                         });
@@ -68,8 +78,22 @@ public class data : MonoBehaviour
     void CreateDataObject(CurrencyData data)
     {
         GameObject spawnedObject;
-        spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
-        spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
+        cubes.Add(Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject); 
+        //spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
+       // spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
+        cubes[counter].GetComponent<cubeBehaviour>().SetData(data);
+        counter++;
+        Debug.Log("WE HAVE " + counter + " CUBES");
+        if(counter > 700)
+        {
+            foreach(GameObject cube in cubes) {
+                Destroy(cube);
+            }
+            // for(int i = 0; i < cubes.Count; i ++) { cubes.}
+            cubes.Clear();
+            counter = 0;
+        }
+
+    }
     }
 
-}
