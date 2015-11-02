@@ -71,4 +71,5 @@ public class data : MonoBehaviour
         spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
         spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
     }
+
 }

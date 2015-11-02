@@ -25,4 +25,11 @@ public class MotionController : MonoBehaviour
     }
 
     private Vector3 direction;
+
+    //void OnTriggerEnter(Collider collision)
+  //  {
+  //      if (collision.gameObject.tag == "camera") { collision.gameObject.transform.position = Vector3(0,100,-30); }
+  //  }
+
+
 }
