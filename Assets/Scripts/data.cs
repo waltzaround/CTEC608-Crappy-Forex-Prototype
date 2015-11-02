@@ -6,6 +6,7 @@ public class data : MonoBehaviour
 {
     public int counter;
     public GameObject spawnTemplate;
+    List<GameObject> cubes = new List<GameObject>();    
     // public Material positiveChange;
     // public Material negativeChange;
 
@@ -77,16 +78,19 @@ public class data : MonoBehaviour
     void CreateDataObject(CurrencyData data)
     {
         GameObject spawnedObject;
-        spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
-        spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
+        cubes.Add(Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject); 
+        //spawnedObject = Instantiate(spawnTemplate, transform.position, transform.rotation) as GameObject;
+       // spawnedObject.GetComponent<cubeBehaviour>().SetData(data);
+        cubes[counter].GetComponent<cubeBehaviour>().SetData(data);
         counter++;
         Debug.Log("WE HAVE " + counter + " CUBES");
-        if(counter > 300)
+        if(counter > 700)
         {
-            foreach (GameObject spawnedObject in Object.FindObjectsOfType<GameObject>())
-            {
-                Destroy(spawnedObject);
+            foreach(GameObject cube in cubes) {
+                Destroy(cube);
             }
+            // for(int i = 0; i < cubes.Count; i ++) { cubes.}
+            cubes.Clear();
             counter = 0;
         }
 
