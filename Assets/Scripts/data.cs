@@ -18,7 +18,7 @@ public class data : MonoBehaviour
     {
         // Starting in 2 seconds.
         // data will be called every 4 seconds
-        InvokeRepeating("dataGet", 2, 4);
+        InvokeRepeating("dataGet", 2, 1);
         counter = 0;
 
 
@@ -84,7 +84,7 @@ public class data : MonoBehaviour
         cubes[counter].GetComponent<cubeBehaviour>().SetData(data);
         counter++;
         Debug.Log("WE HAVE " + counter + " CUBES");
-        if(counter > 4000)
+        if(counter > 2000000)
         {
             foreach(GameObject cube in cubes) {
                 Destroy(cube);
