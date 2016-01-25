@@ -1,5 +1,7 @@
 # test-data-vis
+
 Project that pulls foreign exchange data in JSON from Yahoo Finance v1 API into a Unity scene.
+
 Written for the CTEC608 Creative Technologies Studio IV Paper at AUT
 
 ##Setup Instructions
