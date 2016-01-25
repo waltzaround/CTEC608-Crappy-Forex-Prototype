@@ -5,10 +5,12 @@ Project that pulls foreign exchange data in JSON from the Yahoo Finance v1 API i
 Written for the CTEC608 Creative Technologies Studio IV Paper at Auckland University of Technology
 
 ##Setup Instructions
-1.  Go to `Assets/test.unity`
-1.	Open test.unity and go to `File -> Build and Run`.
-2.	Run the created file.
-3.	Use WASD for movement and move mouse to look around.
+
+1.  Make sure you have a working internet connection
+2.  Go to `Assets/test.unity`
+3.	Open test.unity and go to `File -> Build and Run`.
+4.	Run the created file.
+5.	Use WASD for movement and move mouse to look around.
 
 
 ## Licence
