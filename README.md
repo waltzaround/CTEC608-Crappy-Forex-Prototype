@@ -1,4 +1,7 @@
-# CTEC608 Data Visualisation
+
+![Forex][https://github.com/waltzaround/CTEC608-Crappy-Forex-Prototype/blob/master/forex.png?raw=true]
+
+# CTEC608 Crappy Forex Data Visualisation
 
 Project that pulls foreign exchange data in JSON from the Yahoo Finance v1 API into a Unity scene. It then takes the data and applies it to cubes that display the forex data in 3D. Entire thing is a proof of concept that shows you can take live data and visualize it in a 3D space.
 
