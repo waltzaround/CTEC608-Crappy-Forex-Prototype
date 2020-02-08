@@ -1,5 +1,5 @@
 
-![Forex][https://github.com/waltzaround/CTEC608-Crappy-Forex-Prototype/blob/master/forex.png?raw=true]
+![Forex](https://github.com/waltzaround/CTEC608-Crappy-Forex-Prototype/blob/master/forex.png?raw=true)
 
 # CTEC608 Crappy Forex Data Visualisation
 
